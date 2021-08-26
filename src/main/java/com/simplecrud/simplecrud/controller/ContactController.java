@@ -38,6 +38,9 @@ public class ContactController {
 
     @DeleteMapping("/contacts/{contactEmail}")
         public void deleteContact(@PathVariable("contactEmail") String email){
+            if(!(contactService.existsContactByEmail(email))){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Email not found");
+            }
             contactService.deleteByEmail(email);
         }
 
